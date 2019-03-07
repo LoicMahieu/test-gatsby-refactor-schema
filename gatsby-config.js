@@ -31,12 +31,40 @@ module.exports = {
     // To learn more, visit: https://gatsby.dev/offline
     // 'gatsby-plugin-offline',
     {
-      resolve: `gatsby-source-filesystem`,
+      resolve: `transformer-json`,
       options: {
-        name: `data`,
-        path: `${__dirname}/data`,
-      },
+        only: node => node.sourceInstanceName === 'Comment',
+        typeName: () => 'CommentsJson',
+        transform: obj => ({
+          ...obj,
+          post___NODE: obj.postId
+        }),
+        createNodeId: (node, originalNode) => originalNode.name
+      }
     },
-    `gatsby-transformer-json`
+    {
+      resolve: 'gatsby-source-filesystem',
+      options: {
+        name: 'Comment',
+        path: `${__dirname}/data/comments`,
+      }
+    },
+
+    {
+      resolve: `transformer-json`,
+      options: {
+        only: node => node.sourceInstanceName === 'Post',
+        typeName: () => 'PostsJson',
+        createNodeId: (node, originalNode) => originalNode.name
+      }
+    },
+    {
+      resolve: 'gatsby-source-filesystem',
+      options: {
+        name: 'Post',
+        path: `${__dirname}/data/posts`,
+      }
+    }
+
   ],
 }
