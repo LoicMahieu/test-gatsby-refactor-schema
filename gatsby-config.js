@@ -35,10 +35,6 @@ module.exports = {
       options: {
         only: node => node.sourceInstanceName === 'Comment',
         typeName: () => 'CommentsJson',
-        transform: obj => ({
-          ...obj,
-          post___NODE: obj.postId
-        }),
         createNodeId: (node, originalNode) => originalNode.name
       }
     },
