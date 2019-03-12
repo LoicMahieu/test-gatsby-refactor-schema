@@ -1,0 +1,17 @@
+type CommentsJson implements Node {
+  id: ID!
+  parent: Node
+  children: [Node!]!
+  internal: Internal!
+  postId: String
+  message: String
+  post: PostsJson
+}
+
+type PostsJson implements Node {
+  id: ID!
+  parent: Node
+  children: [Node!]!
+  internal: Internal!
+  content: String
+}
